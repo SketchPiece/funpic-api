@@ -11,7 +11,7 @@ router.get('/quote', async (req, res) => {
     return res
       .status(400)
       .json({ message: 'Not all required arguments received' })
-  const result = PicGenerator.quote(url, username, text)
+  const result = await PicGenerator.quote(url, username, text)
   sendImg(res, result)
 })
 
@@ -23,7 +23,7 @@ router.get('/trumpet', async (req, res) => {
       .status(400)
       .json({ message: 'Not all required arguments received' })
 
-  const result = PicGenerator.trumpet(urlFirst, urlSecond)
+  const result = await PicGenerator.trumpet(urlFirst, urlSecond)
   sendImg(res, result)
 })
 
@@ -33,7 +33,7 @@ router.get('/agree', async (req, res) => {
     return res
       .status(400)
       .json({ message: 'Not all required arguments received' })
-  const result = PicGenerator.agree(url)
+  const result = await PicGenerator.agree(url)
   sendImg(res, result)
 })
 
@@ -43,7 +43,7 @@ router.get('/enrages', async (req, res) => {
     return res
       .status(400)
       .json({ message: 'Not all required arguments received' })
-  const result = PicGenerator.enrages(url)
+  const result = await PicGenerator.enrages(url)
   sendImg(res, result)
 })
 
@@ -53,7 +53,7 @@ router.get('/flashbacks', async (req, res) => {
     return res
       .status(400)
       .json({ message: 'Not all required arguments received' })
-  const result = PicGenerator.flashbacks(url)
+  const result = await PicGenerator.flashbacks(url)
   sendImg(res, result)
 })
 
@@ -63,7 +63,7 @@ router.get('/error', async (req, res) => {
     return res
       .status(400)
       .json({ message: 'Not all required arguments received' })
-  const result = PicGenerator.error(url)
+  const result = await PicGenerator.error(url)
   sendImg(res, result)
 })
 
