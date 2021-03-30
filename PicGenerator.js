@@ -96,17 +96,22 @@ export default class PicGenerator {
     // const avatarFrame = new GifFrame(avatar.bitmap)
     // GifUtil.quantizeDekker(avatarFrame)
     // const postAvatar = GifUtil.copyAsJimp(jimp, avatarFrame)
+    // gif.frames.reduce(()=>{})
 
-    const editedFrames = gif.frames.map((frame, i) => {
+    const editedFrames = gif.frames.reduce((acc, frame, i) => {
+      console.log(acc, frame, i)
+      if (i % 2 === 0) return acc
       const edit = GifUtil.shareAsJimp(jimp, frame)
       const pos = rickrollAvatarCoords[i]
       const x = pos?.[0] || 0
       const y = pos?.[1] || 0
 
       edit.blit(avatar, x, y)
+      console.log(acc)
       // edit.greyscale()
-      return new GifFrame(edit.bitmap)
-    })
+      acc.push(new GifFrame(edit.bitmap))
+      return acc
+    }, [])
 
     if (frame) {
       if (editedFrames.length <= frame || frame < 0) return null
@@ -120,7 +125,11 @@ export default class PicGenerator {
     })
     const after = Date.now()
     console.log(after - before)
-    const editedGif = await gifCodec.encodeGif(editedFrames)
+    const doubleFrames = editedFrames.reduce(
+      (acc, frame) => [...acc, frame, frame],
+      []
+    )
+    const editedGif = await gifCodec.encodeGif(doubleFrames, { loops: 2 })
     // const editedGif = await gifCodec.encodeGif(frames)
     return editedGif.buffer
   }
