@@ -92,6 +92,7 @@ export default class PicGenerator {
     mask.resize(256, 256)
     avatar.mask(mask, 0, 0)
     avatar.resize(80, 80)
+    // avatar.greyscale()
     // const avatarFrame = new GifFrame(avatar.bitmap)
     // GifUtil.quantizeDekker(avatarFrame)
     // const postAvatar = GifUtil.copyAsJimp(jimp, avatarFrame)
@@ -101,7 +102,9 @@ export default class PicGenerator {
       const pos = rickrollAvatarCoords[i]
       const x = pos?.[0] || 0
       const y = pos?.[1] || 0
+
       edit.blit(avatar, x, y)
+      // edit.greyscale()
       return new GifFrame(edit.bitmap)
     })
 
@@ -110,11 +113,15 @@ export default class PicGenerator {
       const copy = GifUtil.copyAsJimp(jimp, editedFrames[frame])
       return copy
     }
+    const before = Date.now()
     editedFrames.forEach((frame, i) => {
-      GifUtil.quantizeDekker(frame)
+      GifUtil.quantizeSorokin(frame, 256, 'min-pop')
       console.log('post processing frame', i)
     })
-    const editedGif = await gifCodec.encodeGif(gif.frames)
+    const after = Date.now()
+    console.log(after - before)
+    const editedGif = await gifCodec.encodeGif(editedFrames)
+    // const editedGif = await gifCodec.encodeGif(frames)
     return editedGif.buffer
   }
 }
