@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { sendImg } from '../utils.js'
+import { sendImg, sendGif } from '../utils.js'
 import PicGenerator from '../PicGenerator.js'
 const router = Router()
 
@@ -65,6 +65,19 @@ router.get('/error', async (req, res) => {
       .json({ message: 'Not all required arguments received' })
   const result = await PicGenerator.error(url)
   sendImg(res, result)
+})
+
+router.get('/rickroll', async (req, res) => {
+  const url = req.query?.url
+  const frame = req.query?.frame
+  if (!url)
+    return res
+      .status(400)
+      .json({ message: 'Not all required arguments received' })
+  const result = await PicGenerator.rickroll(url, frame)
+  if (!result) res.status(400).json({ message: 'Frames count error!' })
+  if (frame) return sendImg(res, result)
+  sendGif(res, result)
 })
 
 export default router

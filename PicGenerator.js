@@ -1,4 +1,5 @@
 import jimp from 'jimp'
+import { GifUtil, GifFrame, GifCodec } from 'gifwrap'
 
 jimp.prototype.imposition = function (src, x = 0, y = 0) {
   const clone = this.clone()
@@ -6,6 +7,8 @@ jimp.prototype.imposition = function (src, x = 0, y = 0) {
   this.blit(clone, 0, 0)
   return this
 }
+
+const gifCodec = new GifCodec()
 
 export default class PicGenerator {
   static async quote(url, username, text) {
@@ -80,4 +83,73 @@ export default class PicGenerator {
     errorImg.blit(avatar, 0, 0)
     return errorImg
   }
+
+  static async rickroll(url, frame) {
+    const gif = await GifUtil.read('assets/images/rickroll.gif')
+    const avatar = await jimp.read(url)
+    const mask = await jimp.read('assets/images/circle-mask.png')
+    avatar.resize(256, 256)
+    mask.resize(256, 256)
+    avatar.mask(mask, 0, 0)
+    avatar.resize(80, 80)
+    // const avatarFrame = new GifFrame(avatar.bitmap)
+    // GifUtil.quantizeDekker(avatarFrame)
+    // const postAvatar = GifUtil.copyAsJimp(jimp, avatarFrame)
+
+    const editedFrames = gif.frames.map((frame, i) => {
+      const edit = GifUtil.shareAsJimp(jimp, frame)
+      const pos = rickrollAvatarCoords[i]
+      const x = pos?.[0] || 0
+      const y = pos?.[1] || 0
+      edit.blit(avatar, x, y)
+      return new GifFrame(edit.bitmap)
+    })
+
+    if (frame) {
+      if (editedFrames.length <= frame || frame < 0) return null
+      const copy = GifUtil.copyAsJimp(jimp, editedFrames[frame])
+      return copy
+    }
+    editedFrames.forEach((frame, i) => {
+      GifUtil.quantizeDekker(frame)
+      console.log('post processing frame', i)
+    })
+    const editedGif = await gifCodec.encodeGif(gif.frames)
+    return editedGif.buffer
+  }
 }
+
+const rickrollAvatarCoords = [
+  [195, 80],
+  [210, 70],
+  [225, 45],
+  [225, 40],
+  [225, 40],
+  [225, 40],
+  [215, 50],
+  [215, 50],
+  [200, 60],
+  [193, 60],
+  [193, 60],
+  [180, 75],
+  [180, 75],
+  [180, 85],
+  [175, 85],
+  [175, 85],
+  [175, 85],
+  [170, 60],
+  [170, 60],
+  [170, 50],
+  [170, 50],
+  [170, 50],
+  [170, 50],
+  [170, 50],
+  [170, 50],
+  [160, 55],
+  [160, 65],
+  [160, 70],
+  [166, 80],
+  [166, 85],
+  [180, 90],
+  [190, 85]
+]

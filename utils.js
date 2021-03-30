@@ -10,13 +10,6 @@ function getJimpBuffer(img) {
   })
 }
 
-export function kitcut(text, limit) {
-  text = text.trim()
-  if (text.length <= limit) return text
-  text = text.slice(0, limit)
-  return text.trim() + '...'
-}
-
 export async function sendImg(res, image) {
   try {
     const buffer = await getJimpBuffer(image)
@@ -28,9 +21,8 @@ export async function sendImg(res, image) {
   }
 }
 
-export function sendGif(res, image) {
+export function sendGif(res, buffer) {
   try {
-    const buffer = getJimpBuffer(image)
     res.header('Content-Type', 'image/gif')
     return res.status(200).send(Buffer.from(buffer, 'base64'))
   } catch (err) {
