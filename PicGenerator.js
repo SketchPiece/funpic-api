@@ -99,16 +99,14 @@ export default class PicGenerator {
     // gif.frames.reduce(()=>{})
 
     const editedFrames = gif.frames.reduce((acc, frame, i) => {
-      console.log(acc, frame, i)
-      if (i % 2 === 0) return acc
+      // console.log(acc, frame, i)
+      // if (i % 2 === 0) return acc
       const edit = GifUtil.shareAsJimp(jimp, frame)
       const pos = rickrollAvatarCoords[i]
       const x = pos?.[0] || 0
       const y = pos?.[1] || 0
 
-      edit.blit(avatar, x, y)
-      console.log(acc)
-      // edit.greyscale()
+      edit.blit(avatar, x, y).greyscale()
       acc.push(new GifFrame(edit.bitmap))
       return acc
     }, [])
@@ -118,18 +116,18 @@ export default class PicGenerator {
       const copy = GifUtil.copyAsJimp(jimp, editedFrames[frame])
       return copy
     }
-    const before = Date.now()
-    editedFrames.forEach((frame, i) => {
-      GifUtil.quantizeSorokin(frame, 256, 'min-pop')
-      console.log('post processing frame', i)
-    })
-    const after = Date.now()
-    console.log(after - before)
-    const doubleFrames = editedFrames.reduce(
-      (acc, frame) => [...acc, frame, frame],
-      []
-    )
-    const editedGif = await gifCodec.encodeGif(doubleFrames, { loops: 2 })
+    // const before = Date.now()
+    // editedFrames.forEach((frame, i) => {
+    //   GifUtil.quantizeSorokin(frame, 256, 'min-pop')
+    //   console.log('post processing frame', i)
+    // })
+    // const after = Date.now()
+    // console.log(after - before)
+    // const doubleFrames = editedFrames.reduce(
+    //   (acc, frame) => [...acc, frame, frame],
+    //   []
+    // )
+    const editedGif = await gifCodec.encodeGif(editedFrames)
     // const editedGif = await gifCodec.encodeGif(frames)
     return editedGif.buffer
   }
