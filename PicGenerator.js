@@ -53,14 +53,15 @@ export default class PicGenerator {
     const agreeFrame = await jimp.read('assets/images/agree.png')
     avatar.resize(650, 650)
     agreeFrame.imposition(avatar, 55, -50)
+    return agreeFrame
   }
 
   static async enrages(url) {
     const avatar = await jimp.read(url)
-    const agreeFrame = await jimp.read('assets/images/enrages.png')
+    const enragesFrame = await jimp.read('assets/images/enrages.png')
     avatar.resize(350, 350)
-    agreeFrame.imposition(avatar)
-    return agreeFrame
+    enragesFrame.imposition(avatar)
+    return enragesFrame
   }
 
   static async flashbacks(url) {
