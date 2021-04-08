@@ -21,7 +21,7 @@ async function sendJimpImage(image) {
 function sendGif(buffer) {
   try {
     this.header('Content-Type', 'image/gif')
-    return res.status(200).send(Buffer.from(buffer, 'base64'))
+    return this.status(200).send(Buffer.from(buffer, 'base64'))
   } catch (err) {
     this.status(500).json({ message: 'Server error' })
     consola.error(err)
