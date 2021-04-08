@@ -107,7 +107,8 @@ export default class PicGenerator {
       const x = pos?.[0] || 0
       const y = pos?.[1] || 0
 
-      edit.blit(avatar, x, y).greyscale()
+      edit.blit(avatar, x, y)
+      // .greyscale()
       acc.push(new GifFrame(edit.bitmap))
       return acc
     }, [])
@@ -117,12 +118,13 @@ export default class PicGenerator {
       const copy = GifUtil.copyAsJimp(jimp, editedFrames[frame])
       return copy
     }
-    // const before = Date.now()
-    // editedFrames.forEach((frame, i) => {
-    //   GifUtil.quantizeSorokin(frame, 256, 'min-pop')
-    //   console.log('post processing frame', i)
-    // })
-    // const after = Date.now()
+    console.time('quantize')
+    editedFrames.forEach((frame, i) => {
+      GifUtil.quantizeSorokin(frame)
+      console.log('post processing frame', i)
+    })
+    console.timeEnd('quantize')
+
     // console.log(after - before)
     // const doubleFrames = editedFrames.reduce(
     //   (acc, frame) => [...acc, frame, frame],

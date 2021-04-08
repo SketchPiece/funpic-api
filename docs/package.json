@@ -1,0 +1,23 @@
+{
+  "name": "fun-pic-docs",
+  "version": "0.0.1",
+  "description": "FunPic Api Documentation",
+  "main": "index.js",
+  "authors": {
+    "name": "SketchPiece",
+    "email": "lubkin.andrey@gmail.com"
+  },
+  "repository": "/fun-pic-docs",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3",
+    "vuepress-plugin-global-variables": "^0.2.0"
+  },
+  "dependencies": {
+    "vue-load-image": "^0.1.12"
+  }
+}

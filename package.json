@@ -5,8 +5,11 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "nodemon index.js",
+    "docs:install": "npm i --prefix docs",
+    "docs:build": "npm run build --prefix docs",
+    "heroku-prebuild": "npm run docs:install && npm run docs:build"
   },
   "author": "Sketch",
   "license": "ISC",
