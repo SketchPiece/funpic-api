@@ -1,7 +1,7 @@
 {
-  "name": "sketch_api",
+  "name": "funpic-api",
   "version": "1.0.0",
-  "description": "My first api",
+  "description": "Memes and funny pics generator api",
   "main": "server.js",
   "type": "module",
   "scripts": {
