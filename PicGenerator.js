@@ -98,12 +98,15 @@ export default class PicGenerator {
       'assets/fonts/demotivatorSmall/demotivator-small.fnt'
     )
     avatar.resize(460, 480)
-    const dfClone = demotivatorFrame.clone()
+    const dfClone = demotivatorWmFrame.clone()
 
     let result = dfClone.imposition(avatar, 20, 20).clone()
 
     for (const [i, text] of Object.entries(args)) {
-      const demotivatorFrameClone = demotivatorFrame.clone()
+      const last = args.length - 1 == i
+      const demotivatorFrameClone = last
+        ? demotivatorWmFrame.clone()
+        : demotivatorFrame.clone()
       const isBig = text.length >= 14
 
       const textArgs = [
