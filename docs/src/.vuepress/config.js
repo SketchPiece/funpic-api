@@ -10,7 +10,8 @@ module.exports = {
     [
       'meta',
       { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }
-    ]
+    ],
+    ['link', { rel: 'icon', type: 'image/png', href: '/favicon.png' }]
   ],
   themeConfig: {
     repo: '',
