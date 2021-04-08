@@ -6,6 +6,7 @@ import { imgMiddleware } from './middlewares/img.middleware.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
+const LINK = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:'
 
 app.use(imgMiddleware)
 app.use('/api', apiRoutes)
@@ -24,5 +25,5 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.listen(PORT, () => {
-  consola.success(`Funpic Api started on port ${PORT}`)
+  consola.success(`Funpic Api started on port ${LINK}${PORT}`)
 })

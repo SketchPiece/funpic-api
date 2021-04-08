@@ -1,21 +1,9 @@
 const { description } = require('../../package')
 
 module.exports = {
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#title
-   */
   title: 'FunPic Api',
-  /**
-   * Ref：https://v1.vuepress.vuejs.org/config/#description
-   */
   description: description,
-  api: 'test',
 
-  /**
-   * Extra tags to be injected to the page HTML `<head>`
-   *
-   * ref：https://v1.vuepress.vuejs.org/config/#head
-   */
   head: [
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
@@ -24,12 +12,6 @@ module.exports = {
       { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }
     ]
   ],
-
-  /**
-   * Theme configuration, here is the default theme configuration for VuePress.
-   *
-   * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
-   */
   themeConfig: {
     repo: '',
     editLinks: false,
@@ -47,7 +29,15 @@ module.exports = {
         {
           title: 'Гайд',
           collapsable: false,
-          children: ['', 'trampet', 'agree', 'flashbacks', 'error', 'rickroll']
+          children: [
+            '',
+            'trampet',
+            'agree',
+            'flashbacks',
+            'error',
+            'demotivator',
+            'rickroll'
+          ]
         }
       ]
     }

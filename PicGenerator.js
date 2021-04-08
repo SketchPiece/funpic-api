@@ -85,8 +85,52 @@ export default class PicGenerator {
     return errorImg
   }
 
-  static demotivator(url, args) {
-    console.log(url, args)
+  static async demotivator(url, args) {
+    const avatar = await jimp.read(url)
+    const demotivatorFrame = await jimp.read('assets/images/demotivator.png')
+    const demotivatorWmFrame = await jimp.read(
+      'assets/images/demotivator-wm.png'
+    )
+    const demotivatorFont = await jimp.loadFont(
+      'assets/fonts/demotivator/demotivator.fnt'
+    )
+    const demotivatorSmallFont = await jimp.loadFont(
+      'assets/fonts/demotivatorSmall/demotivator-small.fnt'
+    )
+    avatar.resize(460, 480)
+    const dfClone = demotivatorFrame.clone()
+
+    let result = dfClone.imposition(avatar, 20, 20).clone()
+
+    for (const [i, text] of Object.entries(args)) {
+      const demotivatorFrameClone = demotivatorFrame.clone()
+      const isBig = text.length >= 14
+
+      const textArgs = [
+        isBig ? demotivatorSmallFont : demotivatorFont,
+        0,
+        470,
+        {
+          text,
+          alignmentX: jimp.HORIZONTAL_ALIGN_CENTER,
+          alignmentY: jimp.VERTICAL_ALIGN_MIDDLE
+        },
+        isBig ? 500 - text.length * 2 : 510 - text.length * 5,
+        120
+      ]
+
+      if (i <= 0) {
+        demotivatorFrameClone.imposition(avatar, 20, 20).print(...textArgs)
+        result = demotivatorFrameClone.clone()
+        continue
+      }
+      result.resize(460, 480)
+
+      demotivatorFrameClone.imposition(result, 20, 20).print(...textArgs)
+      result = demotivatorFrameClone.clone()
+    }
+
+    return result
   }
 
   static async rickroll(url, frame) {

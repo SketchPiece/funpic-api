@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import PicGenerator from '../PicGenerator.js'
+import consola from 'consola'
 const router = Router()
 
 router.get('/quote', async (req, res) => {
@@ -64,6 +65,23 @@ router.get('/error', async (req, res) => {
       .json({ message: 'Not all required arguments received' })
   const result = await PicGenerator.error(url)
   res.sendJimpImage(result)
+})
+
+router.get('/demotivator', async (req, res) => {
+  try {
+    const url = req.query?.url
+    let args = req.query?.args
+    if (!url || !args)
+      return res
+        .status(400)
+        .json({ message: 'Not all required arguments received' })
+    args = JSON.parse(args)
+    const result = await PicGenerator.demotivator(url, args)
+    res.sendJimpImage(result)
+  } catch (err) {
+    consola.error(err)
+    res.status(400).json({ message: "Argument 'args' is not valid" })
+  }
 })
 
 router.get('/rickroll', async (req, res) => {
