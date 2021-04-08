@@ -6,6 +6,8 @@ import apiRoutes from './routes/api.routes.js'
 const app = express()
 const PORT = process.env.PORT || 3000
 
+app.use('/api', apiRoutes)
+
 if (process.env.NODE_ENV === 'production') {
   consola.info('Connecting Docs')
   app.use(express.static(path.resolve('docs', 'src', '.vuepress', 'dist')))
@@ -18,8 +20,6 @@ if (process.env.NODE_ENV === 'production') {
     )
   })
 }
-
-app.use('/api', apiRoutes)
 
 app.listen(PORT, () => {
   consola.success(`Funpic Api started on port ${PORT}`)
