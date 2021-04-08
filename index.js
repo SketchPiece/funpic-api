@@ -2,10 +2,12 @@ import express from 'express'
 import consola from 'consola'
 import path from 'path'
 import apiRoutes from './routes/api.routes.js'
+import { imgMiddleware } from './middlewares/img.middleware.js'
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
+app.use(imgMiddleware)
 app.use('/api', apiRoutes)
 
 if (process.env.NODE_ENV === 'production') {

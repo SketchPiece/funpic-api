@@ -1,5 +1,4 @@
 import { Router } from 'express'
-import { sendImg, sendGif } from '../utils.js'
 import PicGenerator from '../PicGenerator.js'
 const router = Router()
 
@@ -12,7 +11,7 @@ router.get('/quote', async (req, res) => {
       .status(400)
       .json({ message: 'Not all required arguments received' })
   const result = await PicGenerator.quote(url, username, text)
-  sendImg(res, result)
+  res.sendJimpImage(result)
 })
 
 router.get('/trumpet', async (req, res) => {
@@ -24,7 +23,7 @@ router.get('/trumpet', async (req, res) => {
       .json({ message: 'Not all required arguments received' })
 
   const result = await PicGenerator.trumpet(urlFirst, urlSecond)
-  sendImg(res, result)
+  res.sendJimpImage(result)
 })
 
 router.get('/agree', async (req, res) => {
@@ -34,7 +33,7 @@ router.get('/agree', async (req, res) => {
       .status(400)
       .json({ message: 'Not all required arguments received' })
   const result = await PicGenerator.agree(url)
-  sendImg(res, result)
+  res.sendJimpImage(result)
 })
 
 router.get('/enrages', async (req, res) => {
@@ -44,7 +43,7 @@ router.get('/enrages', async (req, res) => {
       .status(400)
       .json({ message: 'Not all required arguments received' })
   const result = await PicGenerator.enrages(url)
-  sendImg(res, result)
+  res.sendJimpImage(result)
 })
 
 router.get('/flashbacks', async (req, res) => {
@@ -54,7 +53,7 @@ router.get('/flashbacks', async (req, res) => {
       .status(400)
       .json({ message: 'Not all required arguments received' })
   const result = await PicGenerator.flashbacks(url)
-  sendImg(res, result)
+  res.sendJimpImage(result)
 })
 
 router.get('/error', async (req, res) => {
@@ -64,7 +63,7 @@ router.get('/error', async (req, res) => {
       .status(400)
       .json({ message: 'Not all required arguments received' })
   const result = await PicGenerator.error(url)
-  sendImg(res, result)
+  res.sendJimpImage(result)
 })
 
 router.get('/rickroll', async (req, res) => {
@@ -77,7 +76,8 @@ router.get('/rickroll', async (req, res) => {
   const result = await PicGenerator.rickroll(url, frame)
   if (!result) res.status(400).json({ message: 'Frames count error!' })
   if (frame) return sendImg(res, result)
-  sendGif(res, result)
+  // sendGif(res, result)
+  res.sendGif(result)
 })
 
 export default router

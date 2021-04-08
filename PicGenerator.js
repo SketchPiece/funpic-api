@@ -85,6 +85,10 @@ export default class PicGenerator {
     return errorImg
   }
 
+  static demotivator(url, args) {
+    console.log(url, args)
+  }
+
   static async rickroll(url, frame) {
     const gif = await GifUtil.read('assets/images/rickroll.gif')
     const avatar = await jimp.read(url)
@@ -93,15 +97,8 @@ export default class PicGenerator {
     mask.resize(256, 256)
     avatar.mask(mask, 0, 0)
     avatar.resize(80, 80)
-    // avatar.greyscale()
-    // const avatarFrame = new GifFrame(avatar.bitmap)
-    // GifUtil.quantizeDekker(avatarFrame)
-    // const postAvatar = GifUtil.copyAsJimp(jimp, avatarFrame)
-    // gif.frames.reduce(()=>{})
 
     const editedFrames = gif.frames.reduce((acc, frame, i) => {
-      // console.log(acc, frame, i)
-      // if (i % 2 === 0) return acc
       const edit = GifUtil.shareAsJimp(jimp, frame)
       const pos = rickrollAvatarCoords[i]
       const x = pos?.[0] || 0
@@ -117,20 +114,7 @@ export default class PicGenerator {
       const copy = GifUtil.copyAsJimp(jimp, editedFrames[frame])
       return copy
     }
-    // console.time('quantize')
-    // editedFrames.forEach((frame, i) => {
-    //   GifUtil.quantizeSorokin(frame)
-    //   console.log('post processing frame', i)
-    // })
-    // console.timeEnd('quantize')
-
-    // console.log(after - before)
-    // const doubleFrames = editedFrames.reduce(
-    //   (acc, frame) => [...acc, frame, frame],
-    //   []
-    // )
     const editedGif = await gifCodec.encodeGif(editedFrames)
-    // const editedGif = await gifCodec.encodeGif(frames)
     return editedGif.buffer
   }
 }
