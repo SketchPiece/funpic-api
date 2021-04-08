@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
+    "start": "node index.js",
+    "start:prod": "cross-env NODE_ENV=production node index.js",
     "dev": "nodemon index.js",
     "docs:install": "npm i --prefix docs",
     "docs:build": "npm run build --prefix docs",
