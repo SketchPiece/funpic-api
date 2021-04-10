@@ -118,7 +118,7 @@ export default class PicGenerator {
           alignmentX: jimp.HORIZONTAL_ALIGN_CENTER,
           alignmentY: jimp.VERTICAL_ALIGN_MIDDLE
         },
-        isBig ? 500 - text.length * 2 : 510 - text.length * 5,
+        isBig ? 510 - text.length * 1.5 : 500,
         120
       ]
 
